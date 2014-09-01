@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4742/branches/beta/Psychtoolbox/PsychRadiometric
+END
+RadianceAndDegrees2ToCornIrradiance.m
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4030/branches/beta/Psychtoolbox/PsychRadiometric/RadianceAndDegrees2ToCornIrradiance.m
+END
+CornIrradianceAndDegrees2ToRadiance.m
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4030/branches/beta/Psychtoolbox/PsychRadiometric/CornIrradianceAndDegrees2ToRadiance.m
+END
+RetIrradianceToTrolands.m
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/RetIrradianceToTrolands.m
+END
+TrolandsToRetIrradiance.m
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4085/branches/beta/Psychtoolbox/PsychRadiometric/TrolandsToRetIrradiance.m
+END
+RadiometricConversionsTest.m
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4030/branches/beta/Psychtoolbox/PsychRadiometric/RadiometricConversionsTest.m
+END
+RetIrradiancePerDegrees2AndEyeLengthToRetIrradiancePerArea.m
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4030/branches/beta/Psychtoolbox/PsychRadiometric/RetIrradiancePerDegrees2AndEyeLengthToRetIrradiancePerArea.m
+END
+RetIrradiancePerAreaAndEyeLengthToRetIrradiancePerDegrees2.m
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4030/branches/beta/Psychtoolbox/PsychRadiometric/RetIrradiancePerAreaAndEyeLengthToRetIrradiancePerDegrees2.m
+END
+Contents.m
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4030/branches/beta/Psychtoolbox/PsychRadiometric/Contents.m
+END
+RetIrradianceAndPupilAreaEyeLengthToRadiance.m
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4742/branches/beta/Psychtoolbox/PsychRadiometric/RetIrradianceAndPupilAreaEyeLengthToRadiance.m
+END
+RadianceAndPupilAreaEyeLengthToRetIrradiance.m
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4742/branches/beta/Psychtoolbox/PsychRadiometric/RadianceAndPupilAreaEyeLengthToRetIrradiance.m
+END
+WattsToRetIrradiance.m
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/WattsToRetIrradiance.m
+END
+QuantaToTrolands.m
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/QuantaToTrolands.m
+END
+TrolandsToQuanta.m
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/TrolandsToQuanta.m
+END
+RadianceAndDistanceAreaToCornIrradiance.m
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4030/branches/beta/Psychtoolbox/PsychRadiometric/RadianceAndDistanceAreaToCornIrradiance.m
+END
+TrolandsToPower.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/TrolandsToPower.m
+END
+QuantaToEnergy.m
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/QuantaToEnergy.m
+END
+PowerToTrolands.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/PowerToTrolands.m
+END
+EnergyToQuanta.m
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/EnergyToQuanta.m
+END
+TrolandsToLum.m
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3670/branches/beta/Psychtoolbox/PsychRadiometric/TrolandsToLum.m
+END

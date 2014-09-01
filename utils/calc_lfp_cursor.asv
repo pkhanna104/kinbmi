@@ -1,0 +1,66 @@
+function [lfp_kin_vars,h_plot_data] = calc_lfp_cursor(p_extractor,features,handles,faux_lfp)
+
+% features is chan x features
+% input: calc_lfp_cursor(p_extractor,data.features(:,t),handles);
+
+%Find task_relevant power range
+task_ind = find(p_extractor.task_ranges>0);
+
+%Find feature inds that correspond to these ranges:
+feat_inds = find(p_extractor.ftfeat_index == task_ind);
+task_feat = mean(features(feat_inds)); %Mean across channels
+
+%Compare current power to baseline: 
+%Zscore, and then set a Zscore of 1 = first target
+
+%Log!
+if handles.log_flag
+    task_feat = log10(task_feat+10^-9);
+end
+
+
+if handles.fraction
+    
+    %Calculate total power: 
+    
+    %Assuming that total power is in the last feature
+    total_power_ind = length(p_extractor.range_inds); 
+    total_inds = find(p_extractor.ftfeat_index == total_power_ind);
+    
+    total_feat = mean(features(total_inds)); %Mean across channels
+    
+    if handles.log_flag
+        total_feat = log10(total_feat+10^-9);
+    end
+    
+    %Note: if log_flag is on, possible that task_feat / total_feat is
+    %negative. 
+    %total_feat = min(total_feat, 40); %Added 5-20-14 to prevent broadband increase as strategy. 
+    
+    frac = (task_feat/total_feat);
+    
+    h_plot_data = handles.h_plot_data;
+    h_plot_data(:,1:end-1) = handles.h_plot_data(:,2:end);
+    h_plot_data(:,end) = [total_feat;task_feat;frac];
+    
+    %Now map fraction range [ 0 , 5] to target space.  
+    mn = 0.5*(handles.frac_range_high + handles.frac_range_low);
+    center_frac = (frac - mn);
+    zscore = center_frac*(handles.baseline_convfrac2targ / mn ); 
+    
+else
+    handles.h_plot_data(:,1:end-1) = handles.h_plot_data(:,2:end);
+    handles.h_plot_data(:,end) = [task_feat; 0; 0];
+    zscore = (task_feat-handles.baseline_mean)/handles.baseline_targ_step;
+    zscore = zscore * handles.baseline_zsc2targ;
+
+end
+   
+
+if handles.sim_lfp
+    lfp_kin_vars(1) = faux_lfp(handles.t);
+    lfp_kin_vars(2) = 0;
+else
+    lfp_kin_vars(1) = zscore; 
+    lfp_kin_vars(2) = 0;
+end

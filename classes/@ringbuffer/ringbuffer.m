@@ -1,0 +1,51 @@
+classdef ringbuffer < handle
+    properties
+        data;          % the data
+        cptr;          % the most recent data point
+        buffer_size;   % buffer size
+        n_new_pts;     % # of points inserted since last read
+    end
+    
+    methods
+        function obj = ringbuffer(data_size,buffer_size)
+            % initialize ring buffer
+            obj.data = zeros(data_size,buffer_size);
+            obj.cptr = 0;
+            obj.buffer_size = buffer_size;
+            obj.n_new_pts = 0;
+        end
+        
+        function insert(obj,newdata)
+            %Assumes new data is in format: chan x pts
+            n_pts = size(newdata,2);
+            obj.n_new_pts = obj.n_new_pts + n_pts;
+            if (n_pts > 0) && (n_pts < obj.buffer_size)
+                inds = obj.cptr + (1 : n_pts); % compute linear coefficients
+                inds(inds > obj.buffer_size) = inds(inds > obj.buffer_size) - obj.buffer_size;   % wrap
+                obj.data(:,inds) = newdata;
+                obj.cptr = inds(end);                                                                                
+            elseif n_pts >= obj.buffer_size
+                obj.data = newdata(:, (n_pts - obj.buffer_size + 1) : end);
+                obj.cptr = obj.buffer_size;
+            end  % if n_pts == 0, do nothing
+        end
+        
+        function data = read(obj,n_pts)
+            if nargin < 2
+                n_pts = obj.buffer_size;
+            end
+            inds = (obj.cptr - n_pts + 1) : obj.cptr;
+            inds(inds < 1) = inds(inds < 1) + obj.buffer_size;
+            data = obj.data(:,inds);
+            obj.n_new_pts = 0;
+        end
+
+        function size = size(obj)
+            size = obj.buffer_size;
+        end
+
+        function n_pts = get_num_new_pts(obj)
+            n_pts = obj.n_new_pts;
+        end
+    end
+end

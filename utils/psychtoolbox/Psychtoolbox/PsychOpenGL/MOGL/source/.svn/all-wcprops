@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4469/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source
+END
+glew.c
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3685/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/glew.c
+END
+gl_manual.c
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3685/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/gl_manual.c
+END
+ftglesGlue.c
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3685/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/ftglesGlue.c
+END
+oglconst.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2874/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/oglconst.m
+END
+autono.txt
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2879/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/autono.txt
+END
+glew.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2871/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/glew.h
+END
+ftglesGlue.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3685/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/ftglesGlue.h
+END
+moglcore.c
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3787/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/moglcore.c
+END
+mogl_rebinder.c
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3649/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/mogl_rebinder.c
+END
+gl_auto_init.c
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2447/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/gl_auto_init.c
+END
+autocode.m
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3770/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/autocode.m
+END
+glm.c
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2447/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/glm.c
+END
+windowhacks.c
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2772/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/windowhacks.c
+END
+mogltypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/3649/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/mogltypes.h
+END
+gl_auto.c
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2871/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/gl_auto.c
+END
+wglew.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2871/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/wglew.h
+END
+glxew.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/2871/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/glxew.h
+END
+makefile_windows_r2007a.m
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/Psychtoolbox-3/Psychtoolbox-3/!svn/ver/4045/branches/beta/Psychtoolbox/PsychOpenGL/MOGL/source/makefile_windows_r2007a.m
+END

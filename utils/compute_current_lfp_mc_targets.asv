@@ -1,0 +1,96 @@
+function [tarloc, lastTar, hold_flag] = compute_current_lfp_mc_targets(events,targets,lastTar,hold_flag)
+% function to compute current target based on events
+% update: PK; all inputs (targets, lastTar, hold_flag) and outputs (tarloc,
+% lastTar, hold_flag) are 1x2 cell arrays with {1} = MC, {2} = LFP control
+    dp=0;
+    targOffset = {62,82}; %targets{1}(2:9) = 64:72, targets{2}(2:9) = 84:92
+    
+    if ~isempty(events)
+        
+        %Last target: find index
+        tar{1} = find(and(events>targOffset{1},events<targOffset{2}),1,'last');
+        tar{2} = find(events>targOffset{2},1,'last');
+        
+        %If not empty, update lastTar, else lastTar is same as input. 
+        for i =1:2
+            if ~isempty(tar{i})
+                lastTar{i} = events(tar{i}) - targOffset{i};
+            end
+        end
+        
+        %Get events after latest target (either MC or LFP): 
+        if ~isempty(tar{1}) && ~isempty(tar{2})
+            last_targ = max(tar{1},tar{2});
+        elseif ~isempty(tar{1})
+            last_targ = tar{1};
+        elseif ~isempty(tar{2})
+            last_targ = tar{2};
+        else 
+            last_targ = 1;
+        end
+
+        %curEv = events(last_targ:end);
+        last_event = curEv(end);
+        
+        if any(curEv == 2) %MC Center On:
+            tarloc{1} = targets{1}(1,:);
+            hold_flag{1}=0;
+        end
+        if any(curEv == 15) %MC Enter center
+            tarloc{1} = targets{1}(1,:);
+            hold_flag{1} = 1;
+        end 
+        if any(curEv == 5) || any(curEv == 6) %Go cue, leave center
+            % head to lastTar
+            tarloc{1} = targets{1}(lastTar{1},:);
+            hold_flag{1} = 0;
+        end
+        if any(curEv == 7) %Enter mc target
+            % should technically hold
+            tarloc{1} = targets{1}(lastTar{1},:);
+            hold_flag{1} = 1;
+        end
+        if any(curEv == 9)%Reward on
+            % should technically hold at center
+            tarloc{1} = targets{1}(1,:);
+            hold_flag{1} = 0;
+        end  
+        if any(curEv == 11)%Reward on
+            % should technically hold at center
+            tarloc{1} = [NaN NaN];
+            hold_flag{1} = 0;
+        end
+        if any(curEv == 24) %LFP center on
+            tarloc{2} = targets{2}(1,:);
+            hold_flag{2} = 0;
+        end
+        if any(curEv == 25) %enter LFP center
+            tarloc{2} = targets{2}(1,:);
+            hold_flag{2} = 1;
+        end
+        if any(curEv == 26) || any(curEv ==27) % LFP GO
+            tarloc{2} = targets{2}(lastTar{2},:);
+            hold_flag{2} = 0;
+        end
+        if any(curEv == 28) %enter LFP periph
+            tarloc{2} = targets{2}(lastTar{2},:);
+            hold_flag{2} = 1;
+        end    
+        if any(curEv == 29) %lfp reward
+            tarloc{2} = targets{2}(lastTar{2},:);
+            hold_flag{2} = 0;
+        end  
+        if any(curEv == 30) %reward off
+            tarloc{2} = [NaN NaN];
+            hold_flag{2} = 0;     
+        end
+        
+        if length(tarloc)==1
+            tarloc{2}=[NaN NaN];
+        end
+        
+    else
+        tarloc{1} = [];
+        tarloc{2} = [];
+    end
+
