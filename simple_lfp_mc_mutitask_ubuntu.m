@@ -117,9 +117,9 @@ handles.low_pass_filt = 1;
 
 % auto name files
 [data_filename decoder_filename neural_filename] = GetAutoName(1,subject);
-handles.data_fullname    = [pwd '/' subject '/data/' data_filename];
-handles.decoder_fullname = [pwd '/' subject '/decoders/' decoder_filename];
-handles.neural_fullname = [pwd '/' subject '/neural/' neural_filename];
+handles.data_fullname    = [pwd '/../' subject '/data/' data_filename];
+handles.decoder_fullname = [pwd '/../' subject '/decoders/' decoder_filename];
+handles.neural_fullname = [pwd '/../' subject '/neural/' neural_filename];
 
    
 % Update handles structure

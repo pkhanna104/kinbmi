@@ -1,7 +1,7 @@
 % function to get filename
 function [data_filename decoder_filename neural_filename] = GetAutoName(bmi_flag,subject)
     % get experiment number
-    dlist = dir([subject '/data']);
+    dlist = dir(['/home/lab/bmi_folders/Preeya/' subject '/data']);
     str = ['dat' datestr(date,'mmddyy')];
     ex = [];
     for k = 1:length(dlist)
