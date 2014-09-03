@@ -40,11 +40,10 @@ function [spikes] = spikeclient(selfip,selfport,remoteip,remoteport)
                             msg = pnet(sock,'readline');
                             if strcmp(msg,'SPIKES')
                                 %Read spikes
-                                pnet(sock,'read',[1,1],'double'); %Read packet num
-                                disp('pause')
+                                pnet(sock,'read',[1,1],'double');
                                 sze = sze - 7 - 8;
                                 nspks = sze/(8*4);
-                                if nspks ~= 0
+                                if nspks ~= 0 %No spikes in this one
                                     data = pnet(sock,'read',[nspks,4],'double');
                                     if isempty(data)
                                         disp('Corrupt message received');
@@ -53,8 +52,6 @@ function [spikes] = spikeclient(selfip,selfport,remoteip,remoteport)
                                     data(:,4) = data(:,4) - remotet0 + localt0;
                                     spikes = [spikes;data];
                                 end
-                                n_ev = pnet(sock,'read',[1,1],'double'); %Read num of events
-                                
                             else
                                 fprintf('Invalid message type received: %s\n',msg);
                                 break;
@@ -70,10 +67,10 @@ function [spikes] = spikeclient(selfip,selfport,remoteip,remoteport)
 
                             if mod(dbefore,3) > mod(dnow,3)
                                 %Plot the spikes in the last 5 seconds
-                                %tgt = spikes(spikes(:,3) - dnow + 1 > 0,:);
-                                %plot(tgt(:,3) - dnow + 1,tgt(:,1) + (tgt(:,2)-1)*128,'.');
-                                %drawnow;
-                                %spikes = [];
+                                tgt = spikes(spikes(:,3) - dnow + 1 > 0,:);
+                                plot(tgt(:,3) - dnow + 1,tgt(:,1) + (tgt(:,2)-1)*128,'.');
+                                drawnow;
+                                spikes = [];
                             end
 
                             dbefore = dnow;

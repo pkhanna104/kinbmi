@@ -1,14 +1,8 @@
-function [] = spikeserver(port,testing)
+function [] = spikeserver(port)
 addpath('tcp_udp_ip');
 addpath('ClientSDK_leq2007');
 port_pause=0.100;
-if testing
-    testind = 0;
-    flagtest=0;
-    for j = 1:20
-        testdata{j}=[];
-    end
-end
+i = 0;
 %totalSpikesSent=0; for debugging, compare with totalSpikesReceived in
 %spikeclient.m
 
@@ -101,7 +95,6 @@ else
                     [nspks,ts] = PL_GetTS(plx);
                 case 'KEEPALIVE'
                     connecttime = clock;
-                    flagtest=1;
                 case 'DISCONNECT'
                     clientisconnected = 0;
                     connecttime = clock + 1;
@@ -175,19 +168,6 @@ else
                     for chan = 1:length(chan_inds)
                         pnet(sock,'write',AD(rg, chan_inds(chan)));
                         %pnet(sock,'write',testmat(1:10, :));
-                        if testing
-                            if testind<100 & flagtest==1
-                                testdata{chan}=[testdata{chan} AD(rg,chan_inds(chan))'];
-                                length(rg)
-                            elseif testind==100
-                                save('testdat','testdata')
-                            end
-                        end
-                    end
-                    if testing
-                        if flagtest==1
-                            testind=testind+1;
-                        end
                     end
                     
                     %Send events

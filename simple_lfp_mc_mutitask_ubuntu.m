@@ -1214,7 +1214,7 @@ function save_stuff(data, handles)
       
     %Baseline data actually used: 
     baseline_used=struct();
-%    baseline_used.frac_targ = handles.frac_targ_step;
+    baseline_used.frac_targ = [handles.t1_frac, handles.t2_frac, handles.t3_frac, handles.t4_frac];
     baseline_used.power = struct();
     baseline_used.power.frange(1) = str2double(get(handles.low_power_box,'String'));
     baseline_used.power.frange(2) = str2double(get(handles.high_power_box,'String'));

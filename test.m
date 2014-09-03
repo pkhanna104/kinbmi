@@ -1,4 +1,19 @@
-function [ad,feat] = test()
+function [ad,feat,ft] = test()
+
+load('dec_seed_pow.mat')
+p_extractor = pow_extractor_pk(decoder.p_extractor_params.window_size,...
+decoder.p_extractor_params.franges,...
+[25, 40],...
+decoder.p_extractor_params.f_max,...
+decoder.p_extractor_params.fs,...
+decoder.p_extractor_params.used_chan);
+
+
+neural_buffer_t = 1;  % in secs
+neural_buffer_size = round(neural_buffer_t*1000);
+%neural_buffer = ringbuffer(length(handles.all_chan),neural_buffer_size);
+neural_buffer = ringbuffer(3,neural_buffer_size);
+
 p = plexon_client();
 p.add_chan([70,72,76]- 64 + 8,'replace_all');
 p.send_marco()
@@ -26,6 +41,7 @@ else
 
     ad = [];
     kin = [];
+    ft = zeros(42,1);
     p.clear_buffer();
     for i = 1:100
         if mod(i, 10);
@@ -43,8 +59,11 @@ else
         end
         toc(t)
 
-         ad = [ad neur];
+        ad = [ad neur];
         kin = [kin n_kin];
+        neural_buffer.insert(neur);
+        ft = [ft p_extractor.extract_features(neural_buffer)];
+        
     end
     save('testdat.mat','ad','kin')
 end
