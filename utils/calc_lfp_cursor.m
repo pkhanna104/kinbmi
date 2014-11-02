@@ -48,7 +48,9 @@ end
 if handles.fraction(lfptarg)
 
     %Fraction
-    lfppos = task_feat/total_feat;
+     %HACK
+    lfppos = task_feat / 10;
+    %lfppos = task_feat/total_feat;
 
     %Center fraction:
     dmn = lfppos - (mean([handles.frac_range_high, handles.frac_range_low]));
@@ -92,6 +94,12 @@ if handles.sim_lfp
     lfp_kin_vars(1) = faux_lfp(handles.t);
     lfp_kin_vars(2) = 0;
 end
+
+if handles.sim_lfp_darpa
+    lfp_kin_vars(1) = faux_lfp(handles.t);
+    lfp_kin_vars(2) = 0;
+end
+
 
 end
 

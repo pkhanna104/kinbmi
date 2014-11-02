@@ -22,7 +22,7 @@ function varargout = simple_lfp_mc_mutitask_ubuntu(varargin)
 
 % Edit the above text to modify the response to help lfp_mc_mutitask_2
 
-% Last Modified by GUIDE v2.5 21-Aug-2014 18:53:09
+% Last Modified by GUIDE v2.5 03-Oct-2014 15:22:21
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -284,7 +284,20 @@ q=load('dat052014g_bmi.mat');
 faux_lfp = q.data.lfp_cursor_kin(1,:);
 clear q
 
+q=load('dat061014i_bmi.mat'); 
+faux_cursor = q.data.lfp_cursor_kin(1,:);
+faux_target_pos = q.data.lfp_target_pos(2,:);
+faux_target = calc_targ_sim(q.data.lfp_target_pos(2,:));
+faux_rew = q.data.reward_trials;
+clear q
+
+faux_cursor = faux_cursor(2070:end);
+faux_target_pos = faux_target_pos(2070:end);
+faux_target = faux_target(2070:end);
+faux_rew = faux_rew(2070:end);
+
 for t = 2:total_itrs
+ 
     if mod(t, 10);
         handles.neural_connect.keep_conn_alive()
     end
@@ -363,13 +376,22 @@ for t = 2:total_itrs
     else
         data.lfp_target_pos(:,t) = data.lfp_target_pos(:,t-1);
     end
+    
+    if handles.sim_lfp_darpa
+        data.lfp_target_pos(2,t) = faux_target_pos(t);
+    end
 
-    if data.n_samp_recv(t) > 0
+    if data.n_samp_recv(t) > 0 || handles.sim_lfp || handles.sim_lfp_darpa
 
         neural_buffer.insert(new_neural);
         data.features(:,t) = p_extractor.extract_features(neural_buffer);
-        [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,faux_lfp,data.lfp_target_pos(:,t));
-               
+        
+        if handles.sim_lfp_darpa
+            [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,faux_cursor,data.lfp_target_pos(:,t));
+        else 
+            [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,faux_lfp,data.lfp_target_pos(:,t));
+        end
+        
         if handles.low_pass_filt > 1
             filt_ind = max(1,t+1-handles.low_pass_filt); %Previous activity: 'low_pass_filt'-1 x 100ms
             filt_dat = mean( [data.lfp_cursor_kin(:,filt_ind:t-1) cur_data'] ,2);
@@ -393,8 +415,12 @@ for t = 2:total_itrs
             ttot = GetSecs()-tsend;
         end
         
-        handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) 0 powerOK]'); %[X pos, Y pos, empty, powerError flag]  
-        tsend=GetSecs();
+        if handles.sim_lfp_darpa
+            handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) faux_target(t)+7 powerOK]'); %[X pos, Y pos, fakeTarget, powerError flag]  
+        else:
+            handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) 0 powerOK]'); %[X pos, Y pos, empty, powerError flag]  
+        end
+            tsend=GetSecs();
         data.powerOK(t) = powerOK;
 
         
@@ -408,7 +434,7 @@ for t = 2:total_itrs
         data.lfp_cursor_kin(:,t) = data.lfp_cursor_kin(:,t-1);
     end
     
-    ind = 1:length(handles.p_extractor.used_chan):handles.p_extractor.n_features;
+    %ind = 1:length(handles.p_extractor.used_chan):handles.p_extractor.n_features;
     %handles.chan_power_plot(:,1:end-1) = handles.chan_power_plot(:,2:end);
     %handles.chan_power_plot(:,end) = data.features(ind,t);
 
@@ -425,7 +451,7 @@ for t = 2:total_itrs
 
     time_elapsed = GetSecs() - t0;
     if time_elapsed <= dt
-         fprintf('Iteration time = %0.3f\n',time_elapsed);
+%         fprintf('Iteration time = %0.3f\n',time_elapsed);
         WaitSecs(dt - time_elapsed);
 %    else
 %        fprintf('WARNING: iteration time = %0.3f\n',time_elapsed);
@@ -637,6 +663,10 @@ handles.used_chan = handles.p_extractor.used_chan';
 
 handles.unused_chan = setxor(handles.all_chan,handles.used_chan);
 handles.unused_chan = handles.unused_chan(:);
+
+% set simulation
+handles.sim_lfp = 0;
+handles.sim_lfp_darpa = 0;
 
 set(handles.used_chan_listbox,'Value',1);
 set(handles.used_chan_listbox,'String',handles.used_chan + handles.chan_offset);
@@ -1551,5 +1581,20 @@ if get(hObject,'Value')
     handles.fraction(4)=1;
 else
     handles.fraction(4)=0;
+end
+guidata(hObject, handles);
+
+
+% --- Executes on button press in sim_lfp_darpa.
+function sim_lfp_darpa_Callback(hObject, eventdata, handles)
+% hObject    handle to sim_lfp_darpa (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of sim_lfp_darpa
+if get(hObject,'Value')
+    handles.sim_lfp_darpa = 1;
+else
+    handles.sim_lfp_darpa = 0;
 end
 guidata(hObject, handles);
