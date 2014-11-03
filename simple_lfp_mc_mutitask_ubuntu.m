@@ -417,10 +417,11 @@ for t = 2:total_itrs
         
         if handles.sim_lfp_darpa
             handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) faux_target(t)+7 powerOK]'); %[X pos, Y pos, fakeTarget, powerError flag]  
-        else:
+        else
             handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) 0 powerOK]'); %[X pos, Y pos, empty, powerError flag]  
         end
-            tsend=GetSecs();
+        
+        tsend=GetSecs();
         data.powerOK(t) = powerOK;
 
         
@@ -451,12 +452,15 @@ for t = 2:total_itrs
 
     time_elapsed = GetSecs() - t0;
     if time_elapsed <= dt
-%         fprintf('Iteration time = %0.3f\n',time_elapsed);
+        %fprintf('Iteration time = %0.3f\n',time_elapsed);
         WaitSecs(dt - time_elapsed);
-%    else
-%        fprintf('WARNING: iteration time = %0.3f\n',time_elapsed);
+    else
+        fprintf('WARNING: iteration time = %0.3f\n',time_elapsed);
     end
-%    data.itr_times(t) = GetSecs() - t0;
+    
+    disp(strcat(' iteration: ', num2str(t)));
+    data.itr_times(t) = GetSecs() - t0;
+
     if t>2 && exist('ttot','var')
         data.itr_times(t)=ttot;
    
