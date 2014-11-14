@@ -47,30 +47,29 @@ end
 
 if handles.fraction(lfptarg)
 
-    %Fraction
-     %HACK
-    lfppos = task_feat / 10;
-    %lfppos = task_feat/total_feat;
-
-    %Center fraction:
-    dmn = lfppos - (mean([handles.frac_range_high, handles.frac_range_low]));
-
-    %Map centered fraction to target range
-    %baseline_convfrac2targ is 0.8125
-
-    %Here, map [-1, 1] to [0, .35]
-   zscore = dmn*(2*handles.baseline_targ_conv)/(handles.frac_range_high - handles.frac_range_low);
-     %zscore = dmn*(2)/(handles.frac_range_high - handles.frac_range_low);
-
+    %Fraction 
+    lfppos = task_feat/total_feat;
+    disp('fraction!')
 else
-
-    lfppos = task_feat;
-    %Here, map [-1, 1] to baseline_targ_step is [.25, .75] of CDF
-    zsc = (lfppos - handles.baseline_mean)/handles.baseline_targ_step;
-
-    %baseline_convfrac2targ is 0.8125
-    zscore = zsc*handles.baseline_targ_conv;
+    lfppos = task_feat/10;
+    disp('power!')
 end
+
+%Center fraction:
+dmn = lfppos - (mean([handles.frac_range_high, handles.frac_range_low]));
+
+%Map centered fraction to target range
+%baseline_convfrac2targ is 0.8125
+%Here, map [-1, 1] to [0, .35]
+zscore = dmn*(2*handles.baseline_targ_conv)/(handles.frac_range_high - handles.frac_range_low);
+
+% % % %     OLD FRACTION WAY OF DOING IT: 
+% % % %     %Here, map [-1, 1] to baseline_targ_step is [.25, .75] of CDF
+% % % %     zsc = (lfppos - handles.baseline_mean)/handles.baseline_targ_step;
+% % % % 
+% % % %     %baseline_convfrac2targ is 0.8125
+% % % %     zscore = zsc*handles.baseline_targ_conv;
+
 
 if total_feat > handles.powercap
     powerOK = 0;
@@ -79,8 +78,6 @@ else
 end
 
 %Now map lfppos to target space:
-
-
 handles.h_plot_data(:,1:end-1) = handles.h_plot_data(:,2:end);
 h_plot_data = handles.h_plot_data;
 h_plot_data(:,1:end-1) = handles.h_plot_data(:,2:end);

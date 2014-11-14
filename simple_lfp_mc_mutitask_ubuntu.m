@@ -280,21 +280,24 @@ update_status(handles,msg,0);
 handles.neural_connect.clear_buffer();
 handles.task_connect.sendGo();
 
-q=load('dat052014g_bmi.mat'); 
-faux_lfp = q.data.lfp_cursor_kin(1,:);
-clear q
+if handles.sim_lfp
+    q=load('dat052014g_bmi.mat'); 
+    faux_lfp = q.data.lfp_cursor_kin(1,:);
+    clear q
+end
 
-q=load('dat061014i_bmi.mat'); 
-faux_cursor = q.data.lfp_cursor_kin(1,:);
-faux_target_pos = q.data.lfp_target_pos(2,:);
-faux_target = calc_targ_sim(q.data.lfp_target_pos(2,:));
-faux_rew = q.data.reward_trials;
-clear q
-
-faux_cursor = faux_cursor(2070:end);
-faux_target_pos = faux_target_pos(2070:end);
-faux_target = faux_target(2070:end);
-faux_rew = faux_rew(2070:end);
+if handles.sim_lfp_darpa
+    q=load('dat061014i_bmi.mat'); 
+    faux_cursor = q.data.lfp_cursor_kin(1,:);
+    faux_target_pos = q.data.lfp_target_pos(2,:);
+    faux_target = calc_targ_sim(q.data.lfp_target_pos(2,:));
+    faux_rew = q.data.reward_trials;
+    clear q 
+    faux_cursor = faux_cursor(2070:end);
+    faux_target_pos = faux_target_pos(2070:end);
+    faux_target = faux_target(2070:end);
+    faux_rew = faux_rew(2070:end);
+end
 
 for t = 2:total_itrs
  
@@ -388,8 +391,10 @@ for t = 2:total_itrs
         
         if handles.sim_lfp_darpa
             [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,faux_cursor,data.lfp_target_pos(:,t));
-        else 
+        elseif handles.sim_lfp
             [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,faux_lfp,data.lfp_target_pos(:,t));
+        else
+            [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,0,data.lfp_target_pos(:,t));
         end
         
         if handles.low_pass_filt > 1
@@ -458,7 +463,7 @@ for t = 2:total_itrs
         fprintf('WARNING: iteration time = %0.3f\n',time_elapsed);
     end
     
-    disp(strcat(' iteration: ', num2str(t)));
+    %disp(strcat(' iteration: ', num2str(t)));
     data.itr_times(t) = GetSecs() - t0;
 
     if t>2 && exist('ttot','var')

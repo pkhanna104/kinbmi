@@ -26,4 +26,4 @@ rsync -v -rl --partial --include="$TAG*.xls" --exclude="*" /storage/plexon/Seba/
 
 
 #Plexon Data
-rsync -v -rlt --partial --include="$TAG*.plx" --exclude="*" /storage/plexon/Seba/$TAG/ /backup/seba/$TAG/map_data/
+rsync -v -rl --partial --include="$TAG*.plx" --exclude="*" /storage/plexon/Seba/$TAG/ /backup/seba/$TAG/map_data/
