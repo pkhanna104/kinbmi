@@ -49,10 +49,9 @@ if handles.fraction(lfptarg)
 
     %Fraction 
     lfppos = task_feat/total_feat;
-    disp('fraction!')
 else
     lfppos = task_feat/10;
-    disp('power!')
+
 end
 
 %Center fraction:

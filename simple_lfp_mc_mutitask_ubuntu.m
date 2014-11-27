@@ -444,7 +444,8 @@ for t = 2:total_itrs
     %handles.chan_power_plot(:,1:end-1) = handles.chan_power_plot(:,2:end);
     %handles.chan_power_plot(:,end) = data.features(ind,t);
 
-    update_displays(handles,data,t);
+    %PK 11-17-14 update
+    %update_displays(handles,data,t);
       
     drawnow;
     
@@ -1226,8 +1227,8 @@ function update_displays(handles,data,t)
     set(handles.h_plot_fraction,'xdata',ind,'ydata',handles.h_plot_data(3,:));
        
     %Update Histogram:
-    bins=[-1.5:.1:1.5];
-    hist(handles.power_hist_disp,data.lfp_cursor_kin(1,1:t),bins);
+    %bins=[-1.5:.1:1.5];
+    %hist(handles.power_hist_disp,data.lfp_cursor_kin(1,1:t),bins);
     
 %Save Stuff: 
 function save_stuff(data, handles)
