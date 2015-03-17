@@ -16,8 +16,6 @@ task_feat = mean(features(feat_inds));
 %Compare current power to baseline: 
 %Zscore, and then set a Zscore of 1 = first target
 
-
-
 %Which LFP target? 
 if lfp_targ_pos(2)<-0.2
     lfptarg=4;
@@ -74,6 +72,15 @@ if total_feat > handles.powercap
     powerOK = 0;
 else
     powerOK = 1;
+end
+
+if handles.beta_trig_stim>0
+    disp('beta_trig')
+    if zscore>0
+        handles.beta_trigger = 1;
+    else
+        handles.beta_trigger = 0;
+    end
 end
 
 %Now map lfppos to target space:

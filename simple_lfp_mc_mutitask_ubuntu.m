@@ -22,7 +22,7 @@ function varargout = simple_lfp_mc_mutitask_ubuntu(varargin)
 
 % Edit the above text to modify the response to help lfp_mc_mutitask_2
 
-% Last Modified by GUIDE v2.5 03-Oct-2014 15:22:21
+% Last Modified by GUIDE v2.5 16-Mar-2015 16:43:53
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -420,8 +420,15 @@ for t = 2:total_itrs
             ttot = GetSecs()-tsend;
         end
         
+        %%%%%HACK%%%%%%%%%%
+        powerOK = 1;
         if handles.sim_lfp_darpa
             handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) faux_target(t)+7 powerOK]'); %[X pos, Y pos, fakeTarget, powerError flag]  
+        elseif handles.beta_trig_stim > 0
+            handles.task_connect.sendPosVelXY([handles.trigger_beta 0 0 0]'); %[beta_trigger]  
+            if handles.trigger_beta
+                disp('Trigger beta!')
+            end
         else
             handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) 0 powerOK]'); %[X pos, Y pos, empty, powerError flag]  
         end
@@ -713,7 +720,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function targ_step_baseline_used_box_Callback(hObject, eventdata, handles)
+function targ_step_baseline_used_box_Callback(hObject, eventdata, ~)
 % hObject    handle to targ_step_baseline_used_box (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -1608,3 +1615,53 @@ else
     handles.sim_lfp_darpa = 0;
 end
 guidata(hObject, handles);
+
+
+% --- Executes on button press in beta_trig_stim_check.
+function beta_trig_stim_check_Callback(hObject, eventdata, handles)
+% hObject    handle to beta_trig_stim_check (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of beta_trig_stim_check
+if get(hObject,'Value')
+    handles.beta_trig_stim = 1;
+else
+    handles.beta_trig_stim = 0;
+end
+guidata(hObject, handles);
+
+
+function beta_trig_stim_val_Callback(hObject, eventdata, handles)
+% hObject    handle to beta_trig_stim_val (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of beta_trig_stim_val as text
+%        str2double(get(hObject,'String')) returns contents of beta_trig_stim_val as a double
+handles.beta_trig_stim_val = str2double(get(hObject,'String'));
+guidata(hObject, handles);
+
+% --- Executes during object creation, after setting all properties.
+function beta_trig_stim_val_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to beta_trig_stim_val (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in beta_trig_stim_update.
+function beta_trig_stim_update_Callback(hObject, eventdata, handles)
+% hObject    handle to beta_trig_stim_update (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+handles.beta_trig_stim_val = str2double(get(handles.beta_trig_stim_val,'String'));
+tmp = get(handles.beta_trig_stim_check, 'Value');
+handles.beta_trig_stim = tmp;
+printf('%f', tmp)
