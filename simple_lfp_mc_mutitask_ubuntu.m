@@ -69,7 +69,7 @@ handles.cursor_radius = 0.4/8;
 % initialize necessary connections:
 % connect to server: 
 
-handles.task_connect = dexterit_interface('192.168.0.2');
+%handles.task_connect = dexterit_interface('192.168.0.2');
 handles.neural_connect = plexon_client();
 
 %Updated:
@@ -422,7 +422,7 @@ for t = 2:total_itrs
         
         %%%%%HACK%%%%%%%%%%
         powerOK = 1;
-        if handles.sim_lfp_darpa
+        if handles.sim_lfp_darpah_
             handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) faux_target(t)+7 powerOK]'); %[X pos, Y pos, fakeTarget, powerError flag]  
         elseif handles.beta_trig_stim > 0
             handles.task_connect.sendPosVelXY([handles.trigger_beta 0 0 0]'); %[beta_trigger]  
