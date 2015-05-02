@@ -1,4 +1,4 @@
-function [lfp_kin_vars,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,features,handles,faux_lfp,lfp_targ_pos)
+function [lfp_kin_vars,h_plot_data, powerOK, beta_trigger] = calc_lfp_cursor(p_extractor,features,handles,faux_lfp,lfp_targ_pos)
 
 
 % features is chan x features
@@ -74,14 +74,16 @@ else
     powerOK = 1;
 end
 
-if handles.beta_trig_stim>0
-    disp('beta_trig')
-    if zscore>0
-        handles.beta_trigger = 1;
-    else
-        handles.beta_trigger = 0;
-    end
-end
+% if handles.beta_trig_stim>0
+%     if zscore>0.5
+%         beta_trigger = 1;
+%     else
+%         beta_trigger = 0;
+%     end
+% else
+%     beta_trigger=0;
+% end
+beta_trigger = 0;
 
 %Now map lfppos to target space:
 handles.h_plot_data(:,1:end-1) = handles.h_plot_data(:,2:end);

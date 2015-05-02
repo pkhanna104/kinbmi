@@ -390,11 +390,14 @@ for t = 2:total_itrs
         data.features(:,t) = p_extractor.extract_features(neural_buffer);
         
         if handles.sim_lfp_darpa
-            [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,faux_cursor,data.lfp_target_pos(:,t));
+            [cur_data,h_plot_data, powerOK, beta_trigger] = calc_lfp_cursor(p_extractor,...
+            data.features(:,t),handles,faux_cursor,data.lfp_target_pos(:,t));
         elseif handles.sim_lfp
-            [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,faux_lfp,data.lfp_target_pos(:,t));
+            [cur_data,h_plot_data, powerOK, beta_trigger] = calc_lfp_cursor(p_extractor,...
+            data.features(:,t),handles,faux_lfp,data.lfp_target_pos(:,t));
         else
-            [cur_data,h_plot_data, powerOK] = calc_lfp_cursor(p_extractor,data.features(:,t),handles,0,data.lfp_target_pos(:,t));
+            [cur_data,h_plot_data, powerOK, beta_trigger] = calc_lfp_cursor(p_extractor,...
+                data.features(:,t),handles,0,data.lfp_target_pos(:,t));
         end
         
         if handles.low_pass_filt > 1
@@ -424,11 +427,12 @@ for t = 2:total_itrs
         powerOK = 1;
         if handles.sim_lfp_darpa
             handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) faux_target(t)+7 powerOK]'); %[X pos, Y pos, fakeTarget, powerError flag]  
+        
         elseif handles.beta_trig_stim > 0
-            handles.task_connect.sendPosVelXY([handles.trigger_beta 0 0 0]'); %[beta_trigger]  
-            if handles.trigger_beta
-                disp('Trigger beta!')
-            end
+            handles.task_connect.sendPosVelXY([beta_trigger 0 0 0]'); %[beta_trigger]
+            %handles.task_connect.sendPosVelXY([beta_trigger 0]'); %[beta_trigger]
+            printf('Trigger beta! %f', beta_trigger)
+            
         else
             handles.task_connect.sendPosVelXY([-1 data.lfp_cursor_kin(1,t) 0 powerOK]'); %[X pos, Y pos, empty, powerError flag]  
         end
@@ -1629,6 +1633,7 @@ if get(hObject,'Value')
 else
     handles.beta_trig_stim = 0;
 end
+handles.beta_trigger = 0;
 guidata(hObject, handles);
 
 
@@ -1665,3 +1670,5 @@ handles.beta_trig_stim_val = str2double(get(handles.beta_trig_stim_val,'String')
 tmp = get(handles.beta_trig_stim_check, 'Value');
 handles.beta_trig_stim = tmp;
 printf('%f', tmp)
+handles.trigger_beta = 0;
+guidata(hObject, handles);
